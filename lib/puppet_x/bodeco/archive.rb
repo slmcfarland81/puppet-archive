@@ -7,7 +7,7 @@ module PuppetX
     class Archive
       def initialize(file)
         @file = file
-        @file_path = Shellwords.shellescape file
+        @file_path = file
       end
 
       def checksum(type)
@@ -69,7 +69,7 @@ module PuppetX
       def command(options)
         if Facter.value(:osfamily) == 'windows'
           opt = parse_flags('x -aoa', options, '7z')
-          "#{win_7zip} #{opt} #{@file_path}"
+          "#{win_7zip} #{opt} \"#{@file_path}\""
         else
           case @file
           when %r{\.tar$}
